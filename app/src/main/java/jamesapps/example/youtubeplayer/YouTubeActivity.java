@@ -2,7 +2,6 @@ package jamesapps.example.youtubeplayer;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -13,6 +12,12 @@ import com.google.android.youtube.player.YouTubePlayerView;
 
 public class YouTubeActivity extends YouTubeBaseActivity
         implements YouTubePlayer.OnInitializedListener {
+    // see https://www.udemy.com/course/master-android-7-nougat-java-app-development-step-by-step/learn/lecture/5601514#questions
+    // "video 120" - "Get Google API Key" for details about getting an API key
+    static final String GOOGLE_API_KEY = "AIzaSyDaIPKwAjKePVSK14T92UonEMaj5Jr7fSw";
+    static final String YOUTUBE_VIDEO_ID = "2SP1dV7AZ8M";   // Spitting Image
+    static final String YOUTUBE_PLAYLIST = "PLmyvLI4z6b246K0caaQYLW9nThyOQkgwq";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
