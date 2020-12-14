@@ -1,6 +1,7 @@
 package jamesapps.example.youtubeplayer;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
@@ -18,6 +19,8 @@ public class YouTubeActivity extends YouTubeBaseActivity
     static final String GOOGLE_API_KEY = "AIzaSyDaIPKwAjKePVSK14T92UonEMaj5Jr7fSw";
     static final String YOUTUBE_VIDEO_ID = "2SP1dV7AZ8M";   // Spitting Image
     static final String YOUTUBE_PLAYLIST = "PLmyvLI4z6b246K0caaQYLW9nThyOQkgwq";
+
+    private static final String TAG = "YouTubeActivity";
 
 
     @Override
@@ -43,8 +46,15 @@ public class YouTubeActivity extends YouTubeBaseActivity
     }
 
     @Override
-    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean wasRestored) {
+        Log.d(TAG, "onInitializationSuccess: provider is: " + provider.getClass().toString());
+        Toast.makeText(this, "Initialised YouTube Player successfully", Toast.LENGTH_LONG).show();
 
+        // wasRestored is true when the user is resuming a previous playback
+        if (!wasRestored){
+            // play the video
+            youTubePlayer.cueVideo(YOUTUBE_VIDEO_ID);
+        }
     }
 
     @Override
