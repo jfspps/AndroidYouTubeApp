@@ -2,6 +2,7 @@ package jamesapps.example.youtubeplayer;
 
 import android.os.Bundle;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.constraintlayout.widget.ConstraintLayout;
 
@@ -35,6 +36,10 @@ public class YouTubeActivity extends YouTubeBaseActivity
         YouTubePlayerView playerView = new YouTubePlayerView(this);
         playerView.setLayoutParams(new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,ViewGroup.LayoutParams.MATCH_PARENT));
         constraintLayout.addView(playerView);
+
+        // initialise the player (if this succeeds, then onInitializationSuccess() is called, otherwise
+        // onInitializationFailure() is called
+        playerView.initialize(GOOGLE_API_KEY, this);
     }
 
     @Override
@@ -44,6 +49,16 @@ public class YouTubeActivity extends YouTubeBaseActivity
 
     @Override
     public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+        final int REQUEST_CODE = 1;
 
+        if (youTubeInitializationResult.isUserRecoverableError()){
+            // this calls Google ErrorDialogs and automatically returns the relevant message to the user (install YouTube App or update YouTube App etc.)
+            // all other non-recoverable errors are handled in the else block below
+            youTubeInitializationResult.getErrorDialog(this, REQUEST_CODE).show();
+        } else {
+            String errorMessage = String.format("There was an error initialising the YouTubePlayer (%1$s)", youTubeInitializationResult.toString());
+            // Toast messages appear on the phone and then automatically fade away without needed user dismissal
+            Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
+        }
     }
 }
