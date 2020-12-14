@@ -15,7 +15,7 @@
         <activity
             android:name=".YouTubeActivity"
             android:label="YouTube Player">
-            <!--            intents not required here since-->
+            <!-- intent-filter not required here since button in MainActivity.java can launch YouTubeActivity -->
         </activity>
 
         <activity android:name=".MainActivity">
@@ -29,6 +29,7 @@
         <activity
             android:name=".StandaloneActivity"
             android:label="Standalone Activity">
+            <!-- intent-filter not required here since button in MainActivity.java can launch StandaloneActivity -->
         </activity>
     </application>
 
