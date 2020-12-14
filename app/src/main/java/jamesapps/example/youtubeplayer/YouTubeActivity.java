@@ -50,7 +50,12 @@ public class YouTubeActivity extends YouTubeBaseActivity
         Log.d(TAG, "onInitializationSuccess: provider is: " + provider.getClass().toString());
         Toast.makeText(this, "Initialised YouTube Player successfully", Toast.LENGTH_LONG).show();
 
+        // couple youTube event listeners, below, with Player
+        youTubePlayer.setPlaybackEventListener(playbackEventListener);
+        youTubePlayer.setPlayerStateChangeListener(playerStateChangeListener);
+
         // wasRestored is true when the user is resuming a previous playback
+        // i.e. play does not start automatically if the video has already been started at a prior point (handy when rotating the screen)
         if (!wasRestored){
             // play the video
             youTubePlayer.cueVideo(YOUTUBE_VIDEO_ID);
@@ -71,4 +76,67 @@ public class YouTubeActivity extends YouTubeBaseActivity
             Toast.makeText(this, errorMessage, Toast.LENGTH_LONG).show();
         }
     }
+
+    // implement the interface PlayBackEventListener for the relevant player events (demo) as callbacks
+    private YouTubePlayer.PlaybackEventListener playbackEventListener = new YouTubePlayer.PlaybackEventListener() {
+        @Override
+        public void onPlaying() {
+            Toast.makeText(YouTubeActivity.this, "Video is playing OK", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onPaused() {
+            Toast.makeText(YouTubeActivity.this, "Video is paused", Toast.LENGTH_LONG).show();
+        }
+
+        // this is also called when a video ends, see onVideoEnded() below
+        // note that messages are not displayed at the same time but in sequence
+        @Override
+        public void onStopped() {
+            Toast.makeText(YouTubeActivity.this, "Video has been stopped", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onBuffering(boolean b) {
+
+        }
+
+        @Override
+        public void onSeekTo(int i) {
+
+        }
+    };
+
+    // ...same demo intent below...
+    private YouTubePlayer.PlayerStateChangeListener playerStateChangeListener = new YouTubePlayer.PlayerStateChangeListener() {
+        @Override
+        public void onLoading() {
+
+        }
+
+        @Override
+        public void onLoaded(String s) {
+
+        }
+
+        @Override
+        public void onAdStarted() {
+            Toast.makeText(YouTubeActivity.this, "Video ad running", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onVideoStarted() {
+            Toast.makeText(YouTubeActivity.this, "Video has started", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onVideoEnded() {
+            Toast.makeText(YouTubeActivity.this, "Video has ended", Toast.LENGTH_LONG).show();
+        }
+
+        @Override
+        public void onError(YouTubePlayer.ErrorReason errorReason) {
+
+        }
+    };
 }
