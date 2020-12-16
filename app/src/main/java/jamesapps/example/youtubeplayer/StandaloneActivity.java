@@ -31,10 +31,17 @@ public class StandaloneActivity extends AppCompatActivity implements View.OnClic
 
         switch (view.getId()) {
             case R.id.btnPlayVideo:
-                intent = YouTubeStandalonePlayer.createVideoIntent(this, YouTubeActivity.GOOGLE_API_KEY, YouTubeActivity.YOUTUBE_VIDEO_ID);
+//                intent = YouTubeStandalonePlayer.createVideoIntent(this, YouTubeActivity.GOOGLE_API_KEY, YouTubeActivity.YOUTUBE_VIDEO_ID);
+
+                //play the video automatically from the beginning in full-screen mode
+                intent = YouTubeStandalonePlayer.createVideoIntent(this,
+                        YouTubeActivity.GOOGLE_API_KEY, YouTubeActivity.YOUTUBE_VIDEO_ID, 0, true, false);
                 break;
             case R.id.btnPlaylist:
-                intent = YouTubeStandalonePlayer.createPlaylistIntent(this, YouTubeActivity.GOOGLE_API_KEY, YouTubeActivity.YOUTUBE_PLAYLIST);
+//                intent = YouTubeStandalonePlayer.createPlaylistIntent(this, YouTubeActivity.GOOGLE_API_KEY, YouTubeActivity.YOUTUBE_PLAYLIST);
+
+                //play the playlist automatically in full screen, starting at the first video from the beginning
+                intent = YouTubeStandalonePlayer.createPlaylistIntent(this, YouTubeActivity.GOOGLE_API_KEY, YouTubeActivity.YOUTUBE_PLAYLIST, 0, 0, true, false);
                 break;
         }
 
